@@ -26,3 +26,5 @@ We should probably not test any code the error-logging library uses as it is a r
 ## Out of Scope
 
 We may want to consider that not adding a listener to those events and to instead log these errors by listening to stderr/stdout is a more robust practice that is more resiliant and would work in cases such as the user calling `process.exit` directly. It may be worth it to add a recommenation so users do that however we should consider error handling code being resiliant as a user expectation.
+
+We cannot reasonably make a stronger guarantee such that any error handling code even in userland should be robust to tampering with built ins. For example if the user alters `lib.get` to throw or `EventTarget.on` to throw we cannot guard against that reasonably but ideally the error created would still reach the global Node.js process error handler.
